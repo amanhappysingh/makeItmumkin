@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { MegaMenuDefault } from '../../components/Header'
 import Voluntier from '../Voluntier'
 import { motion } from "framer-motion";
@@ -12,6 +12,10 @@ import DonateButton from '../../components/DonateButton';
 import { FaHandHoldingHeart, FaHandsHelping } from 'react-icons/fa';
 import { MdCelebration } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
+import Modal from '../../components/Modal';
+
+import NgoPromoCarousel from '../../components/Crausals';
+
 
 // const Layout = ({children}) => {
 //   return (
@@ -24,6 +28,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const navigate = useNavigate()
+  const [modal , setModal] = useState(false)
   // const content = [
   //   {
   //     title: "Collaborative Editing",
@@ -66,28 +71,7 @@ const Home = () => {
   //     ),
   //   },
   // ];
-  const words = [
-    {
-      text: "Build",
-      className: "text-white dark:text-white",
-    },
-    {
-      text: "awesome",
-      className: "text-white dark:text-white",
-    },
-    {
-      text: "apps",
-      className: "text-white dark:text-white",
-    },
-    {
-      text: "with",
-      className: "text-white dark:text-blue-500",
-    },
-    {
-      text: "Aceternity.",
-      className: "text-blue-500 dark:text-blue-500",
-    },
-  ];
+
 
   const images = [
     "https://images.unsplash.com/photo-1485433592409-9018e83a1f0d?q=80&w=1814&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -97,11 +81,14 @@ const Home = () => {
 
   return (
     <section className='w-full  '>
+      <div className='w-full'>
+        <NgoPromoCarousel images={images} />
+      </div>
       <div className='w-full  sm:flex    relative min-h-[80vh] sm:h-[80vh] '>
         <div className='sm:w-[50%] w-full h-full'>
           <div className='flex flex-col pl-2 md:pl-12 gap-3 ml-4 justify-center w-[905] h-full'>
             <div className='w-full '>
-              <h1 className='text-5xl  font-semibold font-sans '>
+              <h1 onClick={() => setModal(true)} className='text-5xl  font-semibold font-sans '>
                 How WE Help People
               </h1>
             </div>
@@ -118,7 +105,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div className='sm:flex-1 block   h-full w-full'>
+        <div  className='sm:flex-1 block   h-full w-full'>
           <img src={images[0]} className='w-full h-full object-cover' />
         </div>
       </div>
@@ -305,6 +292,9 @@ const Home = () => {
       {/* <div className='w-full grid  sm:gap-2  min-h-[40vh]'>
       <StickyScroll content={content} />
       </div> */}
+      <Modal size='lg' isOpen={modal} setModal={setModal} >
+        ksjdflkasdjf lasjdflk asjdflkjasldkfjasl dfjalksfjlaksdjfl jasd
+      </Modal>
     </section>
   )
 }

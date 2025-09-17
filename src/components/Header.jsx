@@ -30,6 +30,7 @@ import {
 import { IoMenu } from "react-icons/io5";
 import { FaHandHoldingHeart } from "react-icons/fa";
 import DonateButton from "./DonateButton";
+import { Link, useLocation } from "react-router-dom";
 
 const navListMenuItems = [
   {
@@ -146,73 +147,41 @@ function NavListMenu() {
     </React.Fragment>
   );
 }
+// or "next/link" if using Next.js
 
-function NavList() {
+function NavList({location}) {
+  const menuItems = [
+    { title: "Home", to: "/" },
+    { title: "About us", to: "/about-us" },
+    { title: "Gallery", to: "/gallery" },
+    { title: "Blog", to: "/blogs" },
+    { title: "Volunteer", to: "/volunteer" },
+    { title: "Contact us", to: "/contact-us" },
+  ]
+
   return (
-    <List className="mt-2 mb-2 gap-2 p-0 md:mt-0 md:mb-0 md:flex-row md:p-1">
-      <Typography
-        as="a"
-        href="/"
-        variant="small"
-        color="blue-gray"
-        className="font-medium "
-      >
-        <ListItem className="flex items-center hover:bg-gray-300 p-3 text-gray-800 transition-all duration-200  py-2 ">Home</ListItem>
-      </Typography>
-      <Typography
-        as="a"
-        href="/about-us"
-        variant="small"
-        color="blue-gray"
-        className="font-medium "
-      >
-        <ListItem className="flex items-center hover:bg-gray-300 p-3 text-gray-800 transition-all duration-200  py-2 ">About us</ListItem>
-      </Typography>
-      <Typography
-        as="a"
-        href="/"
-        variant="small"
-        color="blue-gray"
-        className="font-medium "
-      >
-        <ListItem className="flex items-center hover:bg-gray-300 p-3 text-gray-800 transition-all duration-200  py-2 ">Galary</ListItem>
-      </Typography>
-      <Typography
-        as="a"
-        href="/blogs"
-        variant="small"
-        color="blue-gray"
-        className="font-medium "
-      >
-        <ListItem className="flex items-center hover:bg-gray-300 p-3 text-gray-800 transition-all duration-200  py-2 ">Blog</ListItem>
-      </Typography>
-      <Typography
-        as="a"
-        href="/volunteer"
-        variant="small"
-        color="blue-gray"
-        className="font-medium "
-      >
-        <ListItem className="flex items-center hover:bg-gray-300 p-3 text-gray-800 transition-all duration-200  py-2 ">Volunteer</ListItem>
-      </Typography>
-
-      <Typography
-        as="a"
-        href="/contact-us"
-        variant="small"
-        color="blue-gray"
-        className="font-medium"
-      >
-        <ListItem className="flex items-center hover:bg-gray-300 text-gray-800 p-3 transition-all duration-200 gap-2 py-2 pr-4">
-          Contect us
-        </ListItem>
-      </Typography>
+       <List className="mt-2 mb-2 gap-2 p-0 md:mt-0 md:mb-0 md:flex-row md:p-1">
+      {menuItems.map((item) => {
+        const isActive = location?.pathname === item.to; // check if current path matches
+        return (
+          <Link key={item.title} to={item.to}>
+            <ListItem
+              className={`flex items-center p-3 text-gray-800 transition-all duration-200 py-2 font-medium
+                ${isActive ? "bg-gray-500 text-white" : "hover:bg-gray-300"}`}
+            >
+              {item.title}
+            </ListItem>
+          </Link>
+        );
+      })}
     </List>
-  );
+  )
 }
+
 
 export function MegaMenuDefault() {
   const [openNav, setOpenNav] = React.useState(false);
+  const location = useLocation();
 
   React.useEffect(() => {
     window.addEventListener(
@@ -237,7 +206,7 @@ export function MegaMenuDefault() {
         </div>
         </div>
         <div className="hidden mr-8 md:block">
-          <NavList />
+          <NavList location={location} />
         </div>
         <div onClick={() => setOpenNav(prev => !prev)} className="md:hidden cursor-pointer p-2 group block">
           <IoMenu size={24} className="text-gray-800 group-hover:scale-125 transition-all duration-150 " />
